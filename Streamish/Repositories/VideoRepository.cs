@@ -61,7 +61,7 @@ namespace Streamish.Repositories
             }
         }
 
-
+        // Edited to JOIN the UserProfile table to grab the object for the Video object
         public Video GetById(int id)
         {
             using (var conn = Connection)
@@ -177,7 +177,11 @@ namespace Streamish.Repositories
             }
         }
 
+        // Instead of grabbing all the comments and videos we just want one
+        /*public Video GetVideoByIdWithComments()
+        {
 
+        }*/
 
         public void Add(Video video)
         {
