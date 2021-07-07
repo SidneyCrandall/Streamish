@@ -69,10 +69,11 @@ namespace Streamish.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"
-                          SELECT Title, Description, Url, DateCreated, UserProfileId
-                            FROM Video
-                           WHERE Id = @Id";
+                    cmd.CommandText = @"SELECT v.Title, v.Description, v.Url, v.DateCreated AS DateCreated, v.UserProfileId,
+                                                up.Name, up.Email, up.DateCreated AS UserProfileCreated, up.ImageUrl
+                                        FROM Video v
+                                        JOIN UserProfile up ON v.UserProfileId = up.Id
+                                        WHERE v.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -89,6 +90,14 @@ namespace Streamish.Repositories
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
                             Url = DbUtils.GetString(reader, "Url"),
                             UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                DateCreated = DbUtils.GetDateTime(reader, "UserProfileCreated"),
+                                ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                            }
                         };
                     }
 
@@ -99,6 +108,7 @@ namespace Streamish.Repositories
             }
         }
 
+        // Copied from chapter
         public List<Video> GetAllWithComments()
         {
             using (var conn = Connection)
@@ -176,10 +186,9 @@ namespace Streamish.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"
-                        INSERT INTO Video (Title, Description, DateCreated, Url, UserProfileId)
-                        OUTPUT INSERTED.ID
-                        VALUES (@Title, @Description, @DateCreated, @Url, @UserProfileId)";
+                    cmd.CommandText = @"INSERT INTO Video (Title, Description, DateCreated, Url, UserProfileId)
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@Title, @Description, @DateCreated, @Url, @UserProfileId)";
 
                     DbUtils.AddParameter(cmd, "@Title", video.Title);
                     DbUtils.AddParameter(cmd, "@Description", video.Description);
