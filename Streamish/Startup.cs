@@ -30,6 +30,7 @@ namespace Streamish
 
             // Dependency Injection that is created each time a request is made
             services.AddTransient<IVideoRepository, VideoRepository>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

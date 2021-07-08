@@ -65,10 +65,19 @@ namespace Streamish.Controllers
             return NoContent();
         }
 
+        // Notice the URL's route contains search and the URL's query string has values for q and sortDesc keys. 
+        // Search corresponds to the argument passed to the [HttpGet("search")] attribute, and q and sortDesc correspond to the method's parameters
         [HttpGet("search")]
         public IActionResult Search(string q, bool sortDesc)
         {
             return Ok(_videoRepository.Search(q, sortDesc));
+        }
+
+        // Add a new endpoint, /api/video/hottest?since=<SOME_DATE> that will return videos created on or after the provided date.
+        [HttpGet("hottest")]
+        public IActionResult Hottest(DateTime since)
+        {
+            return Ok(_videoRepository.Hottest(since));
         }
     }
 }
