@@ -69,7 +69,7 @@ namespace Streamish.Tests.Mocks
 
         public List<Video> Search(string criterion, bool sortDescending)
         {
-            throw new NotImplementedException();
+            return _data.FindAll(v => v.Title.Contains(criterion));
         }
 
         public List<Video> GetAllWithComments()
@@ -78,6 +78,11 @@ namespace Streamish.Tests.Mocks
         }
 
         public Video GetVideoByIdWithComments(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Video> Hottest(DateTime criterion)
         {
             throw new NotImplementedException();
         }
