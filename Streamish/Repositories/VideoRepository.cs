@@ -24,8 +24,10 @@ namespace Streamish.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT v.Id, v.Title, v.Description, v.Url, v.DateCreated, v.UserProfileId,
+
                                                 up.Name, up.Email, up.DateCreated AS UserProfileDateCreated,
-                                                up.ImageUrl AS UserProfileImageUrl                        
+                                                up.ImageUrl AS UserProfileImageUrl      
+
                                         FROM Video v 
                                         JOIN UserProfile up ON v.UserProfileId = up.Id
                                         ORDER BY DateCreated";
@@ -70,10 +72,12 @@ namespace Streamish.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT v.Id, v.Title, v.Description, v.Url, v.DateCreated, v.UserProfileId,
+
                                                up.Name, up.Email, up.DateCreated AS UserProfileDateCreated,
                                                up.ImageUrl AS UserProfileImageUrl
+
                                         FROM Video v 
-                                        JOIN UserProfile up ON v.UserProfileId = up.Id
+                                        LEFT JOIN UserProfile up ON v.UserProfileId = up.Id
                                         WHERE v.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -125,6 +129,7 @@ namespace Streamish.Repositories
                                                up.ImageUrl AS UserProfileImageUrl,
 
                                                c.Id AS CommentId, c.Message, c.UserProfileId AS CommentUserProfileId
+
                                         FROM Video v 
                                         JOIN UserProfile up ON v.UserProfileId = up.Id
                                         LEFT JOIN Comment c on c.VideoId = v.id
@@ -191,12 +196,12 @@ namespace Streamish.Repositories
 
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT v.Id AS VideoId, v.Title, v.Description, v.Url,
-                                               v.DateCreated AS VideoDateCreated, v.UserProfileId AS VideoUserProfileId,
+                    cmd.CommandText = @"SELECT v.Id AS VideoId, v.Title, v.Description, v.Url, v.DateCreated , v.UserProfileId,
                                                
-                                                up.Name, up.Email, up.DateCreated AS UserProfileCreated, up.ImageUrl AS PRofileImageURL,
+                                                up.Name, up.Email, up.DateCreated AS UserProfileCreated, up.ImageUrl AS UserProfileImageURL,
                                     
-                                                 c.Id As CommentId, c.Message, c.UserProfileId AS UserProfileComment
+                                                c.Id As CommentId, c.Message, c.UserProfileId AS UserProfileComment, c.VideoId
+
                                         FROM Video v 
                                         JOIN UserProfile up ON v.UserProfileId = up.Id
                                         LEFT JOIN Comment c ON c.VideoId = v.Id
@@ -323,12 +328,12 @@ namespace Streamish.Repositories
                 {
                     var sql = @"SELECT v.Id, v.Title, v.Description, v.Url, v.DateCreated AS VideoDateCreated, v.UserProfileId,
 
-                     up.Name, up.Email, up.DateCreated AS UserProfileDateCreated,
-                     up.ImageUrl AS UserProfileImageUrl
+                                        up.Name, up.Email, up.DateCreated AS UserProfileDateCreated,
+                                        up.ImageUrl AS UserProfileImageUrl
                         
-                FROM Video v 
-                     JOIN UserProfile up ON v.UserProfileId = up.Id
-               WHERE v.Title LIKE @Criterion OR v.Description LIKE @Criterion";
+                                FROM Video v 
+                                JOIN UserProfile up ON v.UserProfileId = up.Id
+                                WHERE v.Title LIKE @Criterion OR v.Description LIKE @Criterion";
 
                     if (sortDescending)
                     {

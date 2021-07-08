@@ -70,6 +70,5 @@ namespace Streamish.Controllers
         {
             return Ok(_videoRepository.Search(q, sortDesc));
         }
-
     }
 }
