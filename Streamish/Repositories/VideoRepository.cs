@@ -320,6 +320,7 @@ namespace Streamish.Repositories
             }
         }
 
+        // Copied from chapter 4
         public List<Video> Search(string criterion, bool sortDescending)
         {
             using (var conn = Connection)
@@ -386,6 +387,9 @@ namespace Streamish.Repositories
 
                 using (var cmd = conn.CreateCommand())
                 {
+                    // The CAST() function converts a value (of any type) into a specified datatype
+                    // We want to return videos created on or after the provided date. This will look convert the date and compare.
+                    // Like fractions we have to make a common denominator to compare. 
                     var sql = @"SELECT v.Id, v.Title, v.Description, v.Url, v.DateCreated AS VideoDateCreated, v.UserProfileId,
 
                                         up.Id AS UserId, up.Name, up.Email, up.DateCreated AS UserProfileDateCreated,
@@ -393,7 +397,7 @@ namespace Streamish.Repositories
 
                                         FROM Video v
                                             JOIN UserProfile up ON v.UserProfileId = up.Id
-
+                                                                                
                                         WHERE CAST(v.DateCreated as datetime)>= @Criterion
                                         ORDER BY v.DateCreated DESC";
 
