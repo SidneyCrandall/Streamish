@@ -204,7 +204,7 @@ namespace Streamish.Repositories
                                                 c.Id As CommentId, c.Message, c.UserProfileId AS UserProfileComment, c.VideoId
 
                                         FROM Video v 
-                                        JOIN UserProfile up ON v.UserProfileId = up.Id
+                                        LEFT JOIN UserProfile up ON v.UserProfileId = up.Id
                                         LEFT JOIN Comment c ON c.VideoId = v.Id
                                         WHERE v.Id = @Id";
 

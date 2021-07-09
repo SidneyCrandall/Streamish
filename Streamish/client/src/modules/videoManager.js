@@ -15,3 +15,9 @@ export const addVideo = (video) => {
     body: JSON.stringify(video),
   });
 };
+
+// 'GetWithComments' called from the VideoController in VStudio
+export const getAllVideosComments = () => {
+    return fetch(`${baseUrl}/GetWithComments`)
+        .then((res) => res.json())
+}; 
