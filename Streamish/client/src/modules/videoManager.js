@@ -21,3 +21,14 @@ export const getAllVideosComments = () => {
     return fetch(`${baseUrl}/GetWithComments`)
         .then((res) => res.json())
 }; 
+
+// Copied from chapter 7
+export const getVideo = (id) => {
+    return fetch(`${baseUrl}/${id}`).then((res) => res.json());
+};
+
+// Search for a video
+export const searchVideo = (searchTerms) => {
+    return fetch(`${baseUrl}/search?=${searchTerms}`)
+        .then((res) => res.json())
+};
