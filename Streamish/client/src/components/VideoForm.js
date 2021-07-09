@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { addVideo } from "../modules/videoManager";
 
 // We need to tell the browser app what info they will be taking in and parsing through to add to the database
@@ -43,8 +43,9 @@ const VideoForm = ({ getVideos }) => {
     });
   };
 
-  // This is what the DOM wil display
-  // W just want a user to input a Title for the video, the "EMBEDDED" url link, and a breif description of the video for other uses to see
+  // This is what the DOM will display
+  // We just want a user to input a Title for the video, the "EMBEDDED" url link, and a breif description of the video for other uses to see
+  // The above code insures that the form holds the info you put in to add to the database
   return (
     <Form>
       <FormGroup>

@@ -17,12 +17,12 @@ const VideoList = () => {
     const handleSearch = (event) => {
         event.preventDefault()
         console.log(event)
-        
+
         let searchInput = event.target.value
         let searchVideos = {}
 
         searchVideos[event.target.id] = searchInput
-        searchVideo(searchInput, true)
+        searchVideo(searchInput)
             .then(videos => setVideos(videos))
     }
 

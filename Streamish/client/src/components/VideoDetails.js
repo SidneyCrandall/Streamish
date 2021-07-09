@@ -9,7 +9,7 @@ import { getVideo } from "../modules/videoManager";
 const VideoDetails = () => {
   const [video, setVideo] = useState();
 
-  // the use of the useParams hook to access the route param
+  // the use of the useParams hook to access the route param from the manager
   const { id } = useParams();
 
   useEffect(() => {
