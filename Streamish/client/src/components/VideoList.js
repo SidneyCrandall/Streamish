@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Video from './Video';
-import { getAllVideosComments } from "../modules/videoManager";
+import { getAllVideos } from "../modules/videoManager";
 
+// Setting the state once data is grabbed, well will re-render the DOM to display the video list
 const VideoList = () => {
   const [videos, setVideos] = useState([]);
 
   const getVideos = () => {
-    getAllVideosComments().then(videos => setVideos(videos));
+    getAllVideos().then(videos => setVideos(videos));
   };
 
   useEffect(() => {
