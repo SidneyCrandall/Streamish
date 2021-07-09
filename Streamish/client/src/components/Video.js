@@ -20,7 +20,7 @@ const Video = ({ video }) => {
         <p>{video.description}</p>
         {/* We need to map through the comments that are joined to the videos. We use dot notation
             in order follow the path of data.*/}
-        <p>{video.comments.map(v => v.message)}</p>
+        <p>{video.comments?.map(v => v.message)}</p>
       </CardBody>
     </Card>
   );
