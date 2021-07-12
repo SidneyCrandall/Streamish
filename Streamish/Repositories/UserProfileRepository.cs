@@ -94,14 +94,11 @@ namespace Streamish.Repositories
                 {
                     cmd.CommandText = @"SELECT up.Id, up.Name, up.Email, up.ImageUrl, up.DateCreated,
 
-                                               v.Id as VideoId, v.Title, v.Description, v.Url, v.DateCreated AS VideoDateCreated, v.UserProfileId,
+                                               v.Id as VideoId, v.Title, v.Description, v.Url, v.DateCreated AS VideoDateCreated, v.UserProfileId AS VideoUserProfileId,
 
-                                               c.Id AS CommentId, c.Message, c.UserProfileId AS CommentUserProfileId, c.VideoId
+                                        FROM UserProfile up
 
-                                        FROM Video v
-
-                                        LEFT JOIN UserProfile up ON up.Id = v.UserProfileId
-                                        LEFT JOIN Comment c ON c.VideoId = v.Id
+                                        LEFT JOIN Video v on v.UserProfileId = u.Id
 
                                         WHERE up.Id = @Id";
 

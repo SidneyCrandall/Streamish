@@ -44,7 +44,7 @@ namespace Streamish.Controllers
 
         // Getting videos with users attached
         // This is given a parameter to differ from the above request.
-        [HttpGet("GetUserVideos{id}")]
+        [HttpGet("GetUserVideos")]
         public IActionResult GetWithVideos(int id)
         {
             var userProfile = _userProfileRepository.GetVideosByUser(id);
