@@ -5,7 +5,6 @@ import { getAllVideos, searchVideo } from "../modules/videoManager";
 // Setting the state once data is grabbed, well will re-render the DOM to display the video list
 const VideoList = () => {
     const [videos, setVideos] = useState([]);
-    const [search, setSearch] = useState("");
 
     const getVideos = () => {
         getAllVideos().then(videos => setVideos(videos));

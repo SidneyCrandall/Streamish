@@ -17,7 +17,7 @@ const ApplicationViews = () => {
         <VideoForm />
       </Route>
         {/* Using a colon tells the reactrouter that this is will be some 'id' parameter. */}
-      <Route path="/videos/:id">
+      <Route path="/videos/GetVideoWithComments/:id">
         <VideoDetails/>
       </Route>
       {/* <Route path="/users/:id">

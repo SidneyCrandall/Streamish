@@ -16,7 +16,7 @@ const Video = ({ video }) => {
                     allowFullScreen />
 
                 {/* This uses the title of a video as a link to the details page. (Refactored from Friday) */}
-                    <Link to={`/videos/${video.id}`}>
+                    <Link to={`/videos/GetVideoWithComments${video.id}`}>
                         <strong>{video.title}</strong>
                     </Link>
 
