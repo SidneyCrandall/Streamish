@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import { useParams } from "react-router-dom";
 import Video from "./Video";
-import { getVideo } from "../modules/videoManager";
+import { getVideoById } from "../modules/videoManager";
 
 // Using the getVideo call from VideoMangaer,js, we are going to call info for a specified video
 // We will use 'id' as a param in order to get the info of that video.
@@ -13,8 +13,8 @@ const VideoDetails = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    getVideo(id).then(setVideo);
-  }, []);
+    getVideoById(id).then(setVideo);
+  }, [id]);
 
   if (!video) {
     return null;
@@ -25,9 +25,9 @@ const VideoDetails = () => {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-sm-12 col-lg-6">
-          <Video video={video} />
+          <Video video={video} userProfile={video.userProfile} />
           <ListGroup>
-            {video.comments.map((c) => (
+            {video.comments?.map((c) => (
               <ListGroupItem>{c.message}</ListGroupItem>
             ))}
           </ListGroup>

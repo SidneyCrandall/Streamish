@@ -2,21 +2,28 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import VideoList from "./VideoList";
 import VideoForm from "./VideoForm";
+import VideoDetails from "./VideoDetails";
+import UserVideos from "./UserVideos";
 
 const ApplicationViews = () => {
   return (
-      /* Looks for the Url and will render to first route that is a match */
+    /* Looks for the Url and will render to first route that is a match */
     <Switch>
-        {/* 'Exact' we only want to render this component with this Url */}
+      {/* 'Exact' we only want to render this component with this Url */}
       <Route path="/" exact>
         <VideoList />
       </Route>
-        {/* If the url matche the value of the path attribute the children will render. */}
+      {/* If the url matche the value of the path attribute the children will render. */}
       <Route path="/videos/add">
         <VideoForm />
       </Route>
-        {/* Using a colon tells the reactrouter that this is will be some 'id' parameter. */}
-      <Route path="/videos/:id">{/* TODO: Video Details Component */}</Route>
+      {/* Using a colon tells the reactrouter that this is will be some 'id' parameter. */}
+      <Route path="/videos/:id">
+        <VideoDetails />
+      </Route>
+      <Route path="/UserProfile/:id">
+        <UserVideos />
+      </Route>
     </Switch>
   );
 };
