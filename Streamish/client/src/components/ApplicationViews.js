@@ -21,7 +21,7 @@ const ApplicationViews = () => {
       <Route path="/videos/:id">
         <VideoDetails />
       </Route>
-      <Route path="/userProfile/:id">
+      <Route path="/UserProfile/:id">
         <UserVideos />
       </Route>
     </Switch>

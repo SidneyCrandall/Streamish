@@ -6,7 +6,7 @@ const Video = ({ video, userProfile }) => {
     return (
         <Card >
             <Link to={`/UserProfile/${userProfile.id}`}>
-                <p className="text-left px-2">Posted by: {video.userProfile.name}</p>
+                <p className="text-left px-2">Posted by: {video.userProfile?.name}</p>
             </Link>
             <CardBody>
                 {/* iFrame embaeds videos to our DOM. they will now display in a more user friendly way */}
@@ -19,7 +19,7 @@ const Video = ({ video, userProfile }) => {
 
                 {/* This uses the title of a video as a link to the details page. (Refactored from Friday) */}
                 <p>
-                <Link to={`/videos/GetVideoWithComments${video.id}`}>
+                <Link to={`/videos/${video.id}`}>
                     <strong>{video.title}</strong>
                 </Link>
                 </p>
