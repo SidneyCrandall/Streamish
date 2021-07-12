@@ -5,9 +5,7 @@ import { getAllVideos, searchVideo } from "../modules/videoManager";
 // Setting the state once data is grabbed, well will re-render the DOM to display the video list
 const VideoList = () => {
     const [videos, setVideos] = useState([]);
-
-    // We want to search a video on the list
-    const [search, setSearch] = useState([]);
+    const [search, setSearch] = useState("");
 
     const getVideos = () => {
         getAllVideos().then(videos => setVideos(videos));
@@ -15,16 +13,13 @@ const VideoList = () => {
 
     // This will be our event handler that will take the input of the users search
     const handleSearch = (event) => {
-        event.preventDefault()
-        console.log(event)
-
+        // The event is a user inputting text for a video title. 
+        // Once enter is hit, it triggers a call to the API. 
         let searchInput = event.target.value
-        let searchVideos = {}
-
-        searchVideos[event.target.id] = searchInput
+        // We use the info of what our API call made to the database to return to us the searched for video
         searchVideo(searchInput)
             .then(videos => setVideos(videos))
-    }
+    };
 
     useEffect(() => {
         getVideos();
@@ -34,8 +29,7 @@ const VideoList = () => {
         <div>
 
             <form>
-                <input class="search" type="text" required placeholder="Search for Video..."
-                    onChange={handleSearch} />
+                <input className="search" type="text" required placeholder="Search for Video" onChange={handleSearch} />
             </form>
 
             <div className="container">

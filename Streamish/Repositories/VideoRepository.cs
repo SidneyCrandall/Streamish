@@ -327,7 +327,7 @@ namespace Streamish.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    var sql = @"SELECT v.Id, v.Title, v.Description, v.Url, v.DateCreated AS VideoDateCreated, v.UserProfileId,
+                    var sql = @"SELECT v.Id, v.Title, v.Description, v.Url, v.DateCreated AS VideoDateCreated, v.UserProfileId AS VideoUserProfileId,
 
                                         up.Name, up.Email, up.DateCreated AS UserProfileDateCreated,
                                         up.ImageUrl AS UserProfileImageUrl

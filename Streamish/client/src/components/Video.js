@@ -15,16 +15,15 @@ const Video = ({ video }) => {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen />
 
-                <p>
-                    <strong>{video.title}</strong>
-                </p>
+                {/* This uses the title of a video as a link to the details page. (Refactored from Friday) */}
+                    <Link to={`/videos/${video.id}`}>
+                        <strong>{video.title}</strong>
+                    </Link>
+
                 <p>{video.description}</p>
                 {/* We need to map through the comments that are joined to the videos. We use dot notation
-                    in order follow the path of data.*/}
                 <p>{video.comments?.map(v => v.message)}</p>
-                <Link to={`/videos/${video.id}`}>
-                    <strong>{video.title}</strong>
-                </Link>
+                    in order follow the path of data.*/}
             </CardBody>
         </Card>
     );

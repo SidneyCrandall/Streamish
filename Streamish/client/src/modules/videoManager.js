@@ -21,11 +21,17 @@ export const addVideo = (video) => {
 
 // Used to call the details of a specified video.
 export const getVideo = (id) => {
-    return fetch(`${baseUrl}/${id}`).then((res) => res.json());
+    return fetch(`${baseUrl}/GetVideoWithComments/${id}`)
+      .then((res) => res.json());
 };
 
 // Search for a video. Since the video can be named anything we leave it as a variable that will parse through our API and match the video Title.
-export const searchVideo = (searchTerms) => {
-    return fetch(`${baseUrl}/search?=${searchTerms}`)
+export const searchVideo = (searchTerm) => {
+    return fetch(`${baseUrl}/search?=${searchTerm}`)
         .then((res) => res.json())
+};
+
+export const getVideosByUserId = (id) => {
+  return fetch(`${baseUrl}/users/${id}`)
+    .then((res) => res.json())
 };
