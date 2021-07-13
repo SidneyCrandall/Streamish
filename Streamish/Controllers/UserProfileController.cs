@@ -29,20 +29,32 @@ namespace Streamish.Controllers
 
         // Grab a single user from the id requested 
         // Parameter added to the HTTP request
-        [HttpGet("GetUserById")]
-        public IActionResult GetUserById(int id)
+        [HttpGet]
+        public IActionResult Get(int id)
         {
 
-            return Ok(_userProfileRepository.GetUserById(id));
+            var userProfile = _userProfileRepository.GetUserById(id);
+
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
         }
 
         // Getting videos with users attached
         // This is given a parameter to differ from the above request.
-        [HttpGet("GetUserWithVideos")]
+        [HttpGet("GetUserWithVideos/{id}")]
         public IActionResult GetWithVideos(int id)
         {
-          
-            return Ok(_userProfileRepository.GetUserWithVideos(id));
+
+           var userProfile = _userProfileRepository.GetUserById(id);
+
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
         }
 
         // Adding a new user

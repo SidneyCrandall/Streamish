@@ -22,22 +22,6 @@ namespace Streamish.Controllers
             return Ok(_videoRepository.GetAll());
         }
 
-        // Get With comments
-        [HttpGet("GetWithComments")]
-        public IActionResult GetWithComments()
-        {
-            var videos = _videoRepository.GetAllWithComments();
-            return Ok(videos);
-        }
-
-        // Details page that will display video and comments
-        [HttpGet("GetVideoByIdWithComments")]
-        public IActionResult GetVideoByIdWithComments(int id)
-        {
-            var video = _videoRepository.GetVideoByIdWithComments(id);
-            return Ok(video);
-        }
-
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -49,6 +33,25 @@ namespace Streamish.Controllers
             return Ok(video);
         }
 
+        // Get With comments
+        [HttpGet("GetWithComments")]
+        public IActionResult GetWithComments()
+        {
+            var videos = _videoRepository.GetAllWithComments();
+            return Ok(videos);
+        }
+
+        // Details page that will display video and comments
+        [HttpGet("GetVideoByIdWithComments{id}")]
+        public IActionResult GetVideoByIdWithComments(int id)
+        {
+            var video = _videoRepository.GetById(id);
+            if (video == null)
+            {
+                return NotFound();
+            }
+            return Ok(video);
+        }
 
         [HttpPost]
         public IActionResult Post(Video video)

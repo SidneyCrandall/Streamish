@@ -199,11 +199,12 @@ namespace Streamish.Repositories
                 {
                     cmd.CommandText = @"SELECT v.Id AS VideoId, v.Title, v.Description, v.Url, v.DateCreated , v.UserProfileId,
                                                
-                                                up.Name, up.Email, up.DateCreated AS UserProfileCreated, up.ImageUrl AS UserProfileImageURL,
+                                                up.Name, up.Email, up.DateCreated AS UserProfileCreated, up.Id as VideoUserProfileId, up.ImageUrl AS UserProfileImageURL,
                                     
                                                 c.Id As CommentId, c.Message, c.UserProfileId AS UserProfileComment, c.VideoId
 
                                         FROM Video v 
+
                                         LEFT JOIN UserProfile up ON v.UserProfileId = up.Id
                                         LEFT JOIN Comment c ON c.VideoId = v.Id
                                         WHERE v.Id = @Id";
@@ -391,11 +392,12 @@ namespace Streamish.Repositories
                                         up.Id AS UserId, up.Name, up.Email, up.DateCreated AS UserProfileDateCreated,
                                         up.ImageUrl AS UserProfileImageUrl 
 
-                                        FROM Video v
-                                            JOIN UserProfile up ON v.UserProfileId = up.Id
+                                FROM Video v
 
-                                        WHERE CAST(v.DateCreated as datetime)>= @Criterion
-                                        ORDER BY v.DateCreated DESC";
+                                JOIN UserProfile up ON v.UserProfileId = up.Id
+
+                                WHERE CAST(v.DateCreated as datetime)>= @Criterion
+                                ORDER BY v.DateCreated DESC";
 
                     cmd.CommandText = sql;
 
