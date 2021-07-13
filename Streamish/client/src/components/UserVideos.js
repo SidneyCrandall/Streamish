@@ -5,7 +5,7 @@ import { getAllVideos } from "../modules/videoManager";
 
 const UserVideos = () => {
 
-    const [videos, setVideos] = useState({});
+    const [videos, setVideos] = useState([]);
 
     const { id } = useParams();
 
@@ -18,7 +18,7 @@ const UserVideos = () => {
 
     useEffect(() => {
         getVideos();
-    }, []);
+    }, [id]);
 
     return (
         <div className="container">

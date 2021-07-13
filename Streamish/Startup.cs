@@ -1,6 +1,7 @@
 using Streamish.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Streamish
 {
@@ -31,6 +33,24 @@ namespace Streamish
             // Dependency Injection that is created each time a request is made
             services.AddTransient<IVideoRepository, VideoRepository>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+
+            var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
+            var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = googleTokenUrl;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = googleTokenUrl,
+                        ValidateAudience = true,
+                        ValidAudience = firebaseProjectId,
+                        ValidateLifetime = true
+                    };
+                });
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -58,6 +78,8 @@ namespace Streamish
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

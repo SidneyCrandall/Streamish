@@ -9,6 +9,9 @@ namespace Streamish.Models
         public int Id { get; set; }
 
         [Required]
+        public string FirebaseUserId { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
         [Required]
