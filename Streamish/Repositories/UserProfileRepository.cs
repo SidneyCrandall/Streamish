@@ -97,12 +97,12 @@ namespace Streamish.Repositories
 
                                                c.Id AS CommentId, c.Message, c.UserProfileId AS CommentUserProfileId, c.VideoId
 
-                                       FROM Video v
+                                        FROM Video v
 
-                                       LEFT JOIN UserProfile up on up.id = v.userprofileid
-                                       LEFT JOIN Comment c on c.VideoId = v.Id
+                                        LEFT JOIN UserProfile up on up.id = v.userprofileid
+                                        LEFT JOIN Comment c on c.VideoId = v.Id
                           
-                                       WHERE up.Id = @Id";
+                                        WHERE up.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -123,13 +123,13 @@ namespace Streamish.Repositories
                                 Videos = new List<Video>(),
 
                             };
-
                         }
 
                         if (DbUtils.IsNotDbNull(reader, "UserProfileId"))
                         {
                             var videoId = DbUtils.GetInt(reader, "VideoId");
                             var video = userProfile.Videos.FirstOrDefault(p => p.Id == videoId);
+
                             if (video == null)
                             {
                                 video = new Video()
@@ -146,6 +146,7 @@ namespace Streamish.Repositories
                                 };
                                 userProfile.Videos.Add(video);
                             }
+
                             if (DbUtils.IsNotDbNull(reader, "CommentId"))
                             {
                                 video.Comments.Add(new Comment()
@@ -158,7 +159,6 @@ namespace Streamish.Repositories
 
                             };
                         }
-
                     };
 
                     reader.Close();
