@@ -2,12 +2,11 @@ import React from "react";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const Video = ({ video, userProfile }) => {
+const Video = ({ video }) => {
     return (
         <Card >
-            <Link to={`/UserProfile/${userProfile.id}`}>
-                <p className="text-left px-2">Posted by: {video.userProfile?.name}</p>
-            </Link>
+                <p className="text-left px-2">Posted by: <Link to={`/users/${video.userProfileId}`}>{video.userProfile.name}</Link></p>
+            
             <CardBody>
                 {/* iFrame embaeds videos to our DOM. they will now display in a more user friendly way */}
                 <iframe className="video"
@@ -25,8 +24,8 @@ const Video = ({ video, userProfile }) => {
                 </p>
                 <p>{video.description}</p>
                 {/* We need to map through the comments that are joined to the videos. We use dot notation
-                <p>{video.comments?.map(v => v.message)}</p>
                     in order follow the path of data.*/}
+                <p>{video.comments?.map(v => v.message)}</p>
             </CardBody>
         </Card>
     );

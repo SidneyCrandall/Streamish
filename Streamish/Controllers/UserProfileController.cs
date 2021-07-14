@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Streamish.Models;
 using Streamish.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Streamish.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -20,6 +18,28 @@ namespace Streamish.Controllers
             _userProfileRepository = userProfileRepository;
         }
 
+        [HttpGet("{firebaseUserId}")]
+        public IActionResult GetByFirebaseUserId(string firebaseUserId)
+        {
+            var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
+        }
+
+        [HttpGet("DoesUserExist/{firebaseUserId}")]
+        public IActionResult DoesUserExist(string firebaseUserId)
+        {
+            var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
         // Get a list of all the users
         [HttpGet]
         public IActionResult Get()
@@ -29,20 +49,28 @@ namespace Streamish.Controllers
 
         // Grab a single user from the id requested 
         // Parameter added to the HTTP request
-        [HttpGet("GetUserById")]
+        [HttpGet("id")]
         public IActionResult GetUserById(int id)
         {
-
-            return Ok(_userProfileRepository.GetUserById(id));
+            var userProfile = _userProfileRepository.GetUserById(id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
         }
 
         // Getting videos with users attached
         // This is given a parameter to differ from the above request.
-        [HttpGet("GetUserWithVideos")]
+        [HttpGet("GetUserWithVideos/{id}")]
         public IActionResult GetWithVideos(int id)
         {
-          
-            return Ok(_userProfileRepository.GetUserWithVideos(id));
+            var userProfile = _userProfileRepository.GetUserWithVideos(id);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
         }
 
         // Adding a new user
